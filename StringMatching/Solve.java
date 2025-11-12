@@ -14,7 +14,7 @@ public class Solve {
         }
 
         int iterations = 0;
-        for (int i = 0; i < s1.length() - s2.length(); i++) {
+        for (int i = 0; i < s1.length() - s2.length() + 1; i++) {
             iterations++;
             // System.out.println("substring = " + s1.substring(i, s2.length() + i));
             if (s1.charAt(i) == s2.charAt(0)            // primeiro caractere igual
