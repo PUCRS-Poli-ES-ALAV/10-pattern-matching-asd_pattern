@@ -65,4 +65,66 @@ public class Solve {
         }
         return h;
     }
+
+    public static void KMPsearch(String pat, String txt) {
+        int M = pat.length(), N = txt.length();
+
+        // lps guarda maior prefixo sufixo para o padrao
+        int lps[] = new int[M];
+        int j = 0; // index para pat[]
+
+        computeLPSArray(pat, M, lps);
+
+        int i = 0, iterations = 0;
+        while (i < N) {
+            iterations++;
+            if (pat.charAt(j) == txt.charAt(i)) {
+                // caractere igual
+                j++;
+                i++;
+            }
+
+            if (j == M) {
+                // string igual
+                System.out.printf("String [%s] encontrada em [%s].\n", pat, txt);
+                System.out.println("Iterations = " + iterations);
+                j = lps[j - 1];
+                return;
+            }
+
+            else if (i < N && pat.charAt(j) != txt.charAt(i)) {
+                // caractere diferente
+                if (j != 0) j = lps[j - 1];
+                else i = i + 1;
+            }
+        }
+
+        System.out.printf("String [%s] não encontrada em [%s].\n", pat, txt);
+        System.out.println("Iterations = " + iterations);
+    }
+
+    private static void computeLPSArray(String pat, int M, int[] lps) {
+        int len = 0;
+        int i = 1;
+        lps[0] = 0;
+
+        while (i < M) {
+            if (pat.charAt(i) == pat.charAt(len)) {
+                // caracteres iguas
+                len++;
+                lps[i] = len;
+                i++;
+            }
+            else {
+                // caracteres diferentes
+                if (len != 0) {
+                    len = lps[len - 1];
+                }
+                else {
+                    lps[i] = len;
+                    i++;
+                }
+            }
+        }
+    }
 }
